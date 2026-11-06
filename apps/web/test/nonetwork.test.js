@@ -20,8 +20,8 @@ const APP_FILES = ['core/sanitizer.js', 'apps/web/app.js', 'apps/web/index.html'
 // The one outbound reference the page may carry: a plain link to the project, which only a
 // click follows (no fetch, no prefetch; CSP connect-src 'none' still applies). SPEC.md
 // names it in the acceptance grep.
-const PROJECT_URL = 'https://github.com/steeb-k/pii-cleaner';
-const PROJECT_LINK_RE = /<a class="app-header-link" href="https:\/\/github\.com\/steeb-k\/pii-cleaner" target="_blank" rel="noopener noreferrer"[^>]*>/;
+const PROJECT_URL = 'https://github.com/skz-stellar/pii-cleaner';
+const PROJECT_LINK_RE = /<a class="app-header-link" href="https:\/\/github\.com\/skz-stellar\/pii-cleaner" target="_blank" rel="noopener noreferrer"[^>]*>/;
 
 function withoutProjectLink(html) {
   const m = PROJECT_LINK_RE.exec(html);

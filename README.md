@@ -109,6 +109,13 @@ Everything else (`core/test/`, `apps/web/test/nonetwork.test.js`,
 
 ## Deploying the web app
 
+The hosted app is at **https://skz-stellar.github.io/pii-cleaner/**, linked
+from https://skz-stellar.github.io/. The `.github/workflows/pages.yml`
+workflow tests and deploys the web build when relevant files change on `main`.
+It can also be run manually from the Actions tab. GitHub Pages must use
+**GitHub Actions** as its build source in this repository's Pages settings.
+Sanitization runs in the browser; input and legends are never uploaded.
+
 The web app's `index.html` references the core via a relative
 `../../core/sanitizer.js` path, which only resolves inside this monorepo.
 To get a flat, self-contained directory you can drop onto any static host
