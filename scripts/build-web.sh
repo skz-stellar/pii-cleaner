@@ -10,6 +10,7 @@ OUT="$ROOT/dist/web"
 
 rm -rf "$OUT"
 mkdir -p "$OUT"
+touch "$OUT/.nojekyll"
 
 cp "$ROOT/apps/web/index.html" "$OUT/index.html"
 cp "$ROOT/apps/web/app.js" "$OUT/app.js"
