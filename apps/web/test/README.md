@@ -17,7 +17,7 @@ Files:
 - `browser.test.js` - headless Chromium (`/usr/bin/chromium`) driven over the DevTools
   Protocol with Node's built-in `WebSocket`. Loads `apps/web/index.html` via `file://` and
   via `serve.py`, drives the UI, and asserts no console errors, no CSP violations, and no
-  requests other than the four local files. Skipped automatically if no Chromium binary
+  requests other than local app files and bundled IBM Plex fonts. Skipped automatically if no Chromium binary
   is found, and **not run in CI** for that reason (see `.github/workflows/ci.yml`) &mdash;
   run it locally before release.
 - `helpers.js` - shared helpers (not a test file): `ROOT` (repo root), `WEB` (this app's

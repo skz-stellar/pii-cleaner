@@ -127,7 +127,7 @@ bash scripts/build-web.sh    # writes dist/web/
 ```
 
 `dist/web/` contains `index.html`, `app.js`, `styles.css`, `sanitizer.js`,
-`README.md`, and `samples/`, with the script path rewritten so
+`README.md`, `fonts/` (IBM Plex with its license), and `samples/`, with the script path rewritten so
 `sanitizer.js` sits next to `index.html`. It's `.gitignore`d; rebuild it
 whenever you deploy.
 

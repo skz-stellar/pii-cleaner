@@ -80,11 +80,11 @@ See the root README's "Deploying the web app" section.
 The app makes zero network requests, by construction:
 
 - `index.html` carries a strict CSP meta tag:
-  `default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'`.
+  `default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'`.
   This blocks any fetch/XHR/WebSocket/image/font/frame load to
   anywhere other than the page's own origin, even if a bug or a
   pasted log line somehow tried to trigger one.
-- There are no `<script src="https://...">`/CDN includes, no fonts,
+- There are no `<script src="https://...">`/CDN includes, no remote fonts,
   no analytics, no service workers. The GitHub link in the header is a plain
   `<a href>` (`rel="noopener noreferrer"`, new tab): nothing is requested
   unless you click it.
@@ -101,7 +101,7 @@ To verify this yourself:
    toggle categories, click Sanitize, copy/download output, export/
    import a legend, and clear the session. With `serve.py` you should
    see only the handful of local requests for `index.html`,
-   `styles.css`, `sanitizer.js`, `app.js` (and any sample file you
+   `styles.css`, `sanitizer.js`, `app.js`, bundled IBM Plex fonts (and any sample file you
    open) &mdash; nothing else, ever. With `file://` the Network tab will
    show nothing at all, since there's no HTTP layer in play.
 2. **Static grep check.** From the repo root:
@@ -110,6 +110,12 @@ To verify this yourself:
    ```
    This should return nothing but comments, the CSP meta line, and the one
    GitHub project link in the header.
+
+## Typography
+
+IBM Plex Sans is used for the interface and IBM Plex Mono for logs, tokens,
+custom lists, and keyboard shortcuts. Fonts are bundled in `fonts/` under the
+SIL Open Font License and load from the same origin; there are no font CDN requests.
 
 ## Token format
 

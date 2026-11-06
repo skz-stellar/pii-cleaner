@@ -286,7 +286,11 @@ describe('browser (headless chromium)', { skip: SKIP }, () => {
       const foreign = rec.requests.filter((u) => !isAllowedUrl(u, mode === 'http' ? httpOrigin : null));
       assert.deepEqual(foreign, [], 'requests outside local origin');
       const local = rec.requests.filter((u) => !/^(data|blob|about):/.test(u)).map((u) => u.replace(/^.*\//, ''));
-      assert.deepEqual([...new Set(local)].sort(), ['app.js', 'index.html', 'sanitizer.js', 'styles.css'], 'only the 4 local files: ' + local);
+      const fonts = ['Sans', 'Mono'].flatMap((family) =>
+        ['Regular', 'SemiBold', 'Bold'].map((weight) => `IBMPlex${family}-${weight}.woff2`));
+      const appFiles = ['app.js', 'index.html', 'sanitizer.js', 'styles.css'];
+      assert.deepEqual([...new Set(local.filter((file) => !fonts.includes(file)))].sort(), appFiles,
+        'only app files and bundled Plex fonts: ' + local);
       const errors = rec.console.filter((c) => c.type === 'error' || c.type === 'warning')
         .concat(rec.logs.filter((l) => l.level === 'error' || l.level === 'warning'));
       assert.deepEqual(errors, [], 'console/log errors or warnings (incl. CSP violations)');

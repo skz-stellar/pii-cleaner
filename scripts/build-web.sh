@@ -18,6 +18,7 @@ cp "$ROOT/apps/web/styles.css" "$OUT/styles.css"
 cp "$ROOT/apps/web/README.md" "$OUT/README.md"
 cp "$ROOT/core/sanitizer.js" "$OUT/sanitizer.js"
 cp -R "$ROOT/samples" "$OUT/samples"
+cp -R "$ROOT/apps/web/fonts" "$OUT/fonts"
 
 # Rewrite the script src from the monorepo-relative path to the flat,
 # same-directory path used in dist/web/.

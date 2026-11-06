@@ -4,9 +4,9 @@ Local-only web app that sanitizes CrowdStrike Falcon and Rapid7 (InsightIDR / In
 JSON logs by replacing PII with typed, numbered tokens, and produces a legend for reversal.
 
 ## Hard constraints
-1. **Zero network.** No CDNs, fonts, analytics, fetch/XHR, WebSockets, service workers.
+1. **Zero network.** No CDNs, remote fonts, analytics, fetch/XHR, WebSockets, service workers. IBM Plex fonts are bundled locally.
    `index.html` must carry
-   `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'">`
+   `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'">`
    Must work from `python3 serve.py` (localhost HTTP) **and** by double-clicking `index.html` (file://).
 2. **No persistence by default.** Legend and inputs live in JS memory only. No localStorage/sessionStorage/IndexedDB/cookies.
 3. **Vanilla JS, no build step, no npm dependencies.** ES2020 is fine (Chromium/Firefox current).
@@ -210,5 +210,5 @@ Reverse mode (restoring tokens), timestamp shifting, private/public IP distincti
   through the pipeline with every PII field tokenized and nothing else changed.
 - Same hostname in two files → same token.
 - Legend export → clear → import → re-sanitize yields identical tokens.
-- Opening DevTools Network tab shows only the 4 local files, nothing else, ever.
+- Opening DevTools Network tab shows only the local app files and bundled IBM Plex fonts, with no external requests.
 - `grep -nE "https?://|fetch\(|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB" *.js *.html` returns only comments, the CSP line, or the one `<a class="app-header-link" href="https://github.com/steeb-k/pii-cleaner" ...>` project link.

@@ -87,11 +87,19 @@ describe('static: CSP and includes', () => {
     assert.doesNotMatch(html, /rel="(dns-prefetch|preconnect|prefetch|prerender)/i);
   });
 
-  test('styles.css has no remote url()/@import/fonts', () => {
+  test('styles.css loads only the bundled IBM Plex fonts, without remote URLs or imports', () => {
     const css = stripComments(read('apps/web/styles.css'), 'styles.css');
     assert.doesNotMatch(css, /@import/i);
     assert.doesNotMatch(css, /url\(\s*["']?\s*(https?:)?\/\//i);
-    assert.doesNotMatch(css, /@font-face/i);
+    const sources = [...css.matchAll(/url\("([^"\n]+)"\)/g)].map((m) => m[1]);
+    const expected = ['Sans', 'Mono'].flatMap((family) =>
+      ['Regular', 'SemiBold', 'Bold'].map((weight) => `fonts/IBMPlex${family}-${weight}.woff2`));
+    assert.deepEqual(sources, expected);
+    assert.equal((css.match(/@font-face/g) || []).length, expected.length);
+    for (const source of sources) {
+      const font = fs.readFileSync(path.join(WEB, source));
+      assert.equal(font.subarray(0, 4).toString(), 'wOF2', source + ' must be a WOFF2 file');
+    }
   });
 });
 
