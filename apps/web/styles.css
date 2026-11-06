@@ -47,44 +47,49 @@
 }
 
 :root {
+  color-scheme: dark;
   --font-sans: "IBM Plex Sans", sans-serif;
   --font-mono: "IBM Plex Mono", monospace;
-  --bg: #f5f6f8;
-  --panel-bg: #ffffff;
-  --text: #1a1d23;
-  --text-dim: #5b6270;
-  --border: #d8dce2;
-  --accent: #2563eb;
-  --accent-text: #ffffff;
-  --danger: #c0392b;
-  --danger-text: #ffffff;
-  --input-bg: #ffffff;
-  --code-bg: #eef0f3;
-  --ok: #1a7f37;
-  --warn-bg: #fff4e5;
-  --warn-border: #e8a33d;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #15171c;
-    --panel-bg: #1d2026;
-    --text: #e6e8eb;
-    --text-dim: #a0a7b4;
-    --border: #343941;
-    --accent: #5b8def;
-    --accent-text: #0b0f17;
-    --danger: #e0574a;
-    --danger-text: #1a1d23;
-    --input-bg: #111317;
-    --code-bg: #111317;
-    --ok: #4fbf67;
-    --warn-bg: #2a2410;
-    --warn-border: #a8791f;
-  }
+  --bg: #020308;
+  --panel-bg: linear-gradient(125deg, #bdedff05, #111c2e08);
+  --text: #eff7f7;
+  --text-dim: #b1c5cd;
+  --border: #c2e9f92e;
+  --accent: #b9dfce;
+  --accent-text: #13251f;
+  --danger: #f0a3a3;
+  --danger-text: #261218;
+  --input-bg: #03071020;
+  --code-bg: #b8f4e40d;
+  --ok: #a2e8d1;
+  --warn-bg: #b9842b18;
+  --warn-border: #e8bc7059;
 }
 
 * { box-sizing: border-box; }
+
+.cosmos { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; background: radial-gradient(ellipse at 72% 20%, #050812, #010207 70%); }
+.nebula { position: absolute; inset: -25%; transform: translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0); will-change: transform; }
+.cloud { position: absolute; inset: 0; opacity: .48; filter: blur(45px); animation: nebula-drift 38s ease-in-out infinite alternate; }
+.cloud-violet { background: radial-gradient(ellipse at 66% 37%, #8051c34d 0%, #51318b26 22%, transparent 48%), radial-gradient(ellipse at 43% 65%, #8159a429, transparent 40%); }
+.cloud-teal { background: radial-gradient(ellipse at 30% 42%, #399eae45 0%, #247a8a26 21%, transparent 44%), radial-gradient(ellipse at 74% 69%, #3a6e902e, transparent 38%); animation-duration: 47s; animation-delay: -18s; animation-direction: alternate-reverse; }
+.cloud-rose { background: radial-gradient(ellipse at 61% 53%, #9f527b26, transparent 28%); animation-duration: 32s; animation-delay: -9s; }
+#starfield { position: absolute; z-index: 2; inset: 0; width: 100%; height: 100%; }
+.cosmos::after { content: ""; position: absolute; z-index: 1; inset: 0; background: radial-gradient(ellipse at 50% 40%, transparent 25%, #03071073 100%); }
+
+.app-header, .layout { position: relative; z-index: 1; }
+.app-header, .panel {
+  -webkit-backdrop-filter: blur(5px) saturate(155%) brightness(115%);
+  backdrop-filter: blur(5px) saturate(155%) brightness(115%);
+  box-shadow: 0 16px 60px #0206101a, inset 0 1px 0 #d4f4ff12;
+}
+input { accent-color: var(--accent); }
+textarea::placeholder, input::placeholder { color: #a0b5c1; opacity: 1; }
+textarea:focus-visible, input:focus-visible, button:focus-visible, a:focus-visible {
+  outline: 2px solid #c5f4e9;
+  outline-offset: 3px;
+}
+
 
 /* Header / main stack. On desktop widths the whole page fits the browser
    window with no page scroll: main takes exactly the height left over,
@@ -188,7 +193,7 @@ button, input, select, textarea {
 
 .badge-local {
   background: var(--ok);
-  color: #ffffff;
+  color: var(--accent-text);
 }
 
 .badge-csp {
@@ -227,7 +232,7 @@ button, input, select, textarea {
 .panel {
   background: var(--panel-bg);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 16px;
   padding: 14px;
 }
 
@@ -480,7 +485,7 @@ kbd {
   margin-left: 4px;
   border-radius: 999px;
   background: var(--danger);
-  color: #fff;
+  color: var(--danger-text);
   font-size: 10.5px;
   text-align: center;
 }
@@ -515,7 +520,7 @@ table th {
   color: var(--text-dim);
   position: sticky;
   top: 0;
-  background: var(--panel-bg);
+  background: #080e18ed;
 }
 
 #legend-filter {
@@ -568,4 +573,17 @@ table th {
   #input-text { flex: 1; min-height: 120px; }
   .col-output, .panel-output { min-height: 0; }
   #output-text { min-height: 120px; }
+}
+
+/* Match the landing page's slow, autonomous background and clear glass. */
+@keyframes nebula-drift {
+  from { transform: translate3d(-3%, -2%, 0) rotate(-4deg) scale(1); }
+  to { transform: translate3d(4%, 3%, 0) rotate(5deg) scale(1.12); }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .app-header, .panel { background: #111c2e1f; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cloud { animation: none; }
+  .nebula { transform: none; will-change: auto; }
 }

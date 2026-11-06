@@ -101,7 +101,7 @@ To verify this yourself:
    toggle categories, click Sanitize, copy/download output, export/
    import a legend, and clear the session. With `serve.py` you should
    see only the handful of local requests for `index.html`,
-   `styles.css`, `sanitizer.js`, `app.js`, bundled IBM Plex fonts (and any sample file you
+   `styles.css`, `sanitizer.js`, `app.js`, `starfield.js`, bundled IBM Plex fonts (and any sample file you
    open) &mdash; nothing else, ever. With `file://` the Network tab will
    show nothing at all, since there's no HTTP layer in play.
 2. **Static grep check.** From the repo root:
@@ -110,6 +110,14 @@ To verify this yourself:
    ```
    This should return nothing but comments, the CSP meta line, and the one
    GitHub project link in the header.
+
+## Appearance
+
+The interface uses the same dark nebula, layered floating stars, and clear
+frosted-glass panels as the homepage. Animation runs entirely locally in a
+separate decorative canvas, never reads input or output, pauses when the tab
+is hidden, and stays still when reduced motion is requested. It does not react
+to pointer movement or scrolling.
 
 ## Typography
 
