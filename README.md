@@ -126,7 +126,7 @@ bash scripts/build-web.sh    # writes dist/web/
 # then copy dist/web/*  to your Pages folder (or any static host)
 ```
 
-`dist/web/` contains `index.html`, `app.js`, `starfield.js`, `styles.css`, `sanitizer.js`,
+`dist/web/` contains `index.html`, `app.js`, `starfield.js`, `surface-shade.js`, `styles.css`, `sanitizer.js`,
 `README.md`, `fonts/` (IBM Plex with its license), and `samples/`, with the script path rewritten so
 `sanitizer.js` sits next to `index.html`. It's `.gitignore`d; rebuild it
 whenever you deploy.

@@ -288,7 +288,7 @@ describe('browser (headless chromium)', { skip: SKIP }, () => {
       const local = rec.requests.filter((u) => !/^(data|blob|about):/.test(u)).map((u) => u.replace(/^.*\//, ''));
       const fonts = ['Sans', 'Mono'].flatMap((family) =>
         ['Regular', 'SemiBold', 'Bold'].map((weight) => `IBMPlex${family}-${weight}.woff2`));
-      const appFiles = ['app.js', 'index.html', 'sanitizer.js', 'starfield.js', 'styles.css'];
+      const appFiles = ['app.js', 'index.html', 'sanitizer.js', 'starfield.js', 'styles.css', 'surface-shade.js'];
       assert.deepEqual([...new Set(local.filter((file) => !fonts.includes(file)))].sort(), appFiles,
         'only app files and bundled Plex fonts: ' + local);
       const errors = rec.console.filter((c) => c.type === 'error' || c.type === 'warning')

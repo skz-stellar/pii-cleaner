@@ -15,7 +15,7 @@ const read = (f) => fs.readFileSync(path.join(ROOT, f), 'utf8');
 // App files whose source must never reference network/storage/dialog APIs, as in the
 // SPEC acceptance grep. Paths are relative to ROOT (the repo root). test/ directories
 // are excluded: they legitimately talk to 127.0.0.1.
-const APP_FILES = ['core/sanitizer.js', 'apps/web/app.js', 'apps/web/starfield.js', 'apps/web/index.html'];
+const APP_FILES = ['core/sanitizer.js', 'apps/web/app.js', 'apps/web/starfield.js', 'apps/web/surface-shade.js', 'apps/web/index.html'];
 
 // The one outbound reference the page may carry: a plain link to the project, which only a
 // click follows (no fetch, no prefetch; CSP connect-src 'none' still applies). SPEC.md
@@ -68,7 +68,7 @@ describe('static: CSP and includes', () => {
     const html = read('apps/web/index.html');
     const scripts = [...html.matchAll(/<script[^>]*src="([^"]+)"/g)].map((m) => m[1]);
     const links = [...html.matchAll(/<link[^>]*href="([^"]+)"/g)].map((m) => m[1]);
-    assert.deepEqual(scripts, ['../../core/sanitizer.js', 'app.js', 'starfield.js']);
+    assert.deepEqual(scripts, ['../../core/sanitizer.js', 'app.js', 'starfield.js', 'surface-shade.js']);
     // styles.css + inlined data: icons (the macOS app icon; also prevents an implicit /favicon.ico request)
     const nonData = links.filter((h) => !h.startsWith('data:image/png;base64,'));
     assert.deepEqual(nonData, ['styles.css']);
@@ -230,7 +230,7 @@ describe('runtime: serve.py', () => {
     assert.match(r.body, /Content-Security-Policy/);
   });
 
-  for (const f of ['/apps/web/index.html', '/apps/web/styles.css', '/core/sanitizer.js', '/apps/web/app.js', '/apps/web/starfield.js']) {
+  for (const f of ['/apps/web/index.html', '/apps/web/styles.css', '/core/sanitizer.js', '/apps/web/app.js', '/apps/web/starfield.js', '/apps/web/surface-shade.js']) {
     test('GET ' + f + ' -> 200 + no-store', async () => {
       const r = await get('127.0.0.1', port, f);
       assert.equal(r.status, 200);

@@ -587,3 +587,29 @@ table th {
   .cloud { animation: none; }
   .nebula { transform: none; will-change: auto; }
 }
+
+/* Darken only the surrounding chrome; the mask preserves the text fields. */
+.app-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: #00000066;
+}
+@supports (mask-composite: exclude) or (-webkit-mask-composite: xor) {
+  .panel { position: relative; }
+  .panel[data-surface-shaded]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: inherit;
+    background: #00000066;
+    -webkit-mask: var(--surface-mask);
+    mask: var(--surface-mask);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+}
